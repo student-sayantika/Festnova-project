@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
 const session = require('express-session');
+const fetch = require("node-fetch");
 
 // 🔹 Session
 app.use(session({
