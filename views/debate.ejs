@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Debate Competition</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+<style>
+body{
+margin:0;
+font-family:Poppins;
+background:linear-gradient(135deg,#1f1c2c,#928dab);
+color:white;
+text-align:center;
+}
+
+h1{
+margin-top:30px;
+}
+
+/* BUTTONS */
+button{
+margin:10px;
+padding:10px 20px;
+border:none;
+background:#ffd369;
+color:black;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+}
+
+button:hover{
+background:white;
+}
+
+/* BOX */
+.box{
+margin:30px auto;
+padding:20px;
+width:80%;
+max-width:600px;
+background:rgba(0,0,0,0.6);
+border-radius:15px;
+}
+
+.timer{
+font-size:30px;
+margin-top:15px;
+color:#ffd369;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🗣 Debate Competition</h1>
+<p>Click below to get your topic instantly</p>
+
+<div class="box">
+
+<button onclick="generateTopic()">🎯 Generate Topic</button>
+
+<h2 id="topic">Your topic will appear here</h2>
+
+<div class="timer" id="timer">00:00</div>
+
+<button onclick="startTimer()">⏳ Start 2 Min Timer</button>
+
+</div>
+
+<div class="box">
+<h3>📜 Rules</h3>
+<p>
+• Team of 2 (For & Against)<br>
+• Each speaker gets 2 minutes<br>
+• No offensive language<br>
+• Topic given instantly<br>
+</p>
+
+<h3>🏆 Judging Criteria</h3>
+<p>
+• Content & Knowledge<br>
+• Confidence<br>
+• Communication Skills<br>
+• Rebuttal ability
+</p>
+
+<h3>🎁 Prize</h3>
+<p>
+🥇 Winner: ₹3000 + Certificate<br>
+🥈 Runner-up: ₹1500 + Certificate
+</p>
+
+<h3>📞 Contact</h3>
+<p>
+Debate Coordinator: Ankit - 9876548888
+</p>
+
+<button onclick="register()">Register</button>
+
+</div>
+
+<script>
+
+/* RANDOM TOPICS */
+function generateTopic(){
+
+let topics = [
+"Social media does more harm than good",
+"AI will replace human jobs",
+"Online education vs offline education",
+"Climate change is the biggest threat",
+"Technology is making humans lazy",
+"Is competition better than collaboration?",
+"Should mobile phones be banned in classrooms?",
+"Is space exploration worth the cost?",
+"Are exams the best way to judge students?",
+"Should AI be regulated strictly?"
+];
+
+let random = topics[Math.floor(Math.random()*topics.length)];
+
+document.getElementById("topic").innerText = random;
+}
+
+/* TIMER */
+let time = 120; // 2 minutes
+let interval;
+
+function startTimer(){
+
+clearInterval(interval);
+
+time = 120;
+
+interval = setInterval(() => {
+
+let min = Math.floor(time/60);
+let sec = time%60;
+
+document.getElementById("timer").innerText =
+(min<10?"0":"")+min + ":" + (sec<10?"0":"")+sec;
+
+time--;
+
+if(time < 0){
+clearInterval(interval);
+alert("⏰ Time's up!");
+}
+
+},1000);
+
+}
+
+/* REGISTER */
+function register(){
+window.location.href="/register?event=debate";
+}
+
+</script>
+
+</body>
+</html>

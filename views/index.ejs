@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title><%= title %></title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+font-family:'Poppins', sans-serif;
+background:linear-gradient(135deg,#1E3A8A,#C2185B,#E91E63,#FF4081,#FF80AB);
+color:white;
+min-height:100vh;
+overflow-x:hidden;
+overflow-y:auto;
+scroll-behavior:smooth;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{
+width:10px;
+}
+
+::-webkit-scrollbar-track{
+background:rgba(255,255,255,0.1);
+}
+
+::-webkit-scrollbar-thumb{
+background:#ffd369;
+border-radius:10px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+background:white;
+}
+
+/* NAVBAR */
+nav{
+background:rgba(0,0,0,0.6);
+padding:10px 20px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+position:sticky;
+top:0;
+flex-wrap:wrap;
+z-index:1000;
+}
+
+.logo{
+display:flex;
+align-items:center;
+}
+
+.logo img{
+height:70px;
+margin-right:20px;
+border-radius:15px;
+}
+
+.logo h2{
+margin:0;
+font-family:'Orbitron', sans-serif;
+}
+
+.nav-links{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.nav-links a{
+color:white;
+text-decoration:none;
+margin:15px;
+font-size:18px;
+font-weight:500;
+transition:0.3s;
+}
+
+.nav-links a:hover{
+color:#ffd369;
+}
+
+.admin-link{
+color:#ffd369 !important;
+font-weight:bold;
+border:1px solid #ffd369;
+padding:5px 10px;
+border-radius:6px;
+}
+
+.admin-link:hover{
+background:#ffd369;
+color:black !important;
+}
+
+/* TITLE */
+.title{
+text-align:center;
+padding:60px 20px;
+}
+
+.title h1{
+font-size:55px;
+font-family:'Orbitron', sans-serif;
+color:#FFFDD0;
+}
+
+.title p{
+font-size:20px;
+color:#ffd369;
+}
+
+.title button{
+margin:10px;
+padding:10px 20px;
+border:none;
+background:#ffd369;
+color:black;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.title button:hover{
+background:white;
+}
+
+/* SLIDESHOW */
+.slideshow{
+text-align:center;
+padding:80px 20px;
+position:relative;
+height:250px;
+overflow:hidden;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.slide{
+position:absolute;
+width:100%;
+left:0;
+top:50%;
+opacity:0;
+transform:translateY(-50%);
+animation:slideShow 12s infinite;
+}
+
+.slide:nth-child(1){
+animation-delay:0s;
+}
+
+.slide:nth-child(2){
+animation-delay:4s;
+}
+
+.slide:nth-child(3){
+animation-delay:8s;
+}
+
+.slide h2{
+font-size:36px;
+font-family:'Orbitron', sans-serif;
+}
+
+.slide p{
+font-size:18px;
+width:70%;
+margin:auto;
+}
+
+/* GALLERY SECTION */
+.gallery{
+padding:60px 20px;
+text-align:center;
+}
+
+.gallery h2{
+font-size:40px;
+font-family:'Orbitron', sans-serif;
+color:#FFFDD0;
+margin-bottom:30px;
+}
+
+.gallery-container{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:20px;
+padding:20px;
+}
+
+.gallery-container img{
+width:100%;
+height:250px;
+object-fit:cover;
+border-radius:15px;
+transition:0.4s;
+box-shadow:0 8px 20px rgba(0,0,0,0.4);
+}
+
+.gallery-container img:hover{
+transform:scale(1.05);
+}
+
+/* FOOTER */
+footer{
+background:rgba(0,0,0,0.6);
+text-align:center;
+padding:20px;
+margin-top:40px;
+}
+
+/* ANIMATION */
+@keyframes slideShow{
+0%{
+opacity:0;
+transform:translateY(-50%) translateX(100px);
+}
+10%{
+opacity:1;
+transform:translateY(-50%) translateX(0);
+}
+30%{
+opacity:1;
+transform:translateY(-50%) translateX(0);
+}
+40%{
+opacity:0;
+transform:translateY(-50%) translateX(-100px);
+}
+100%{
+opacity:0;
+transform:translateY(-50%) translateX(-100px);
+}
+}
+
+/* COUNTDOWN */
+#countdown{
+position:fixed;
+top:90px;
+right:20px;
+background:rgba(0,0,0,0.7);
+padding:12px 15px;
+border-radius:12px;
+font-size:14px;
+font-weight:bold;
+z-index:999;
+}
+
+/* CHAT BOX */
+#chat-container{
+position:fixed;
+bottom:20px;
+left:20px;
+width:260px;
+z-index:9999;
+}
+
+#chat-header{
+background:#111;
+color:white;
+padding:10px;
+border-radius:10px 10px 0 0;
+cursor:pointer;
+font-weight:bold;
+}
+
+#chat-body{
+background:white;
+color:black;
+display:none;
+flex-direction:column;
+padding:10px;
+border-radius:0 0 10px 10px;
+}
+
+#chat-messages{
+height:150px;
+overflow-y:auto;
+font-size:14px;
+margin-bottom:10px;
+}
+
+#chat-input{
+width:100%;
+padding:5px;
+margin-bottom:5px;
+}
+
+#chat-body button{
+background:#ffd369;
+border:none;
+padding:5px;
+cursor:pointer;
+width:100%;
+font-weight:bold;
+}
+
+/* RESPONSIVE */
+@media (max-width:768px){
+.title h1{
+font-size:32px;
+}
+#countdown{
+font-size:12px;
+}
+nav{
+flex-direction:column;
+text-align:center;
+}
+}
+
+@media (max-width:480px){
+.title h1{
+font-size:26px;
+}
+.nav-links a{
+font-size:14px;
+margin:6px;
+}
+.slide h2{
+font-size:24px;
+}
+.slide p{
+font-size:14px;
+width:90%;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+<div class="logo">
+<img src="/images/logo1.png">
+<h2><%= title %></h2>
+</div>
+
+<div class="nav-links">
+<a href="/">Home</a>
+<a href="/about">About</a>
+<a href="/events">Events</a>
+<a href="/gallery">Gallery</a>
+<a href="/contact">Contact</a>
+<a href="/admin-login" class="admin-link">Admin</a>
+</div>
+</nav>
+
+<div id="countdown">
+Event Starts In: <span id="timer"></span>
+</div>
+
+<div class="title">
+<h1><%= title %></h1>
+<p>The Ultimate Celebration of Talent</p>
+
+<a href="/register">
+<button>Register</button>
+</a>
+
+<button onclick="viewEvents()">View Events</button>
+</div>
+
+<div class="slideshow">
+
+<div class="slide">
+<h2>Welcome to <%= title %></h2>
+<p>The ultimate platform celebrating creativity, innovation and student talent.</p>
+</div>
+
+<div class="slide">
+<h2>Experience FestNova</h2>
+<p>Enjoy coding competitions, cultural events, hackathons, music and dance.</p>
+</div>
+
+<div class="slide">
+<h2>Create Memories</h2>
+<p>Join the celebration of energy, creativity and unforgettable experiences.</p>
+</div>
+
+</div>
+
+<!-- GALLERY SECTION -->
+<section class="gallery">
+
+<h2>FestNova Memories</h2>
+
+<div class="gallery-container">
+
+<img src="/images/image1.png" alt="Fest Image">
+<img src="/images/image2.png" alt="Fest Image">
+<img src="/images/image3.png" alt="Fest Image">
+<img src="/images/image4.png" alt="Fest Image">
+
+<img src="/images/coding.jpg" alt="Coding Event">
+<img src="/images/music.jpg" alt="Music Event">
+<img src="/images/robotics.jpg" alt="Robotics Event">
+<img src="/images/game.jpg" alt="Gaming Event">
+
+</div>
+
+</section>
+
+<footer>
+<p>© 2026 <%= title %></p>
+</footer>
+
+<div id="chat-container">
+
+<div id="chat-header" onclick="toggleChat()">💬 Chat / Query</div>
+
+<div id="chat-body">
+<div id="chat-messages"></div>
+
+<input type="text" id="chat-input" placeholder="Ask something...">
+<button onclick="sendMessage()">Send</button>
+</div>
+
+</div>
+
+<script>
+
+/* NAV */
+function viewEvents(){
+window.location.href="/events";
+}
+
+/* COUNTDOWN */
+const eventDate = new Date("2026-05-17T10:00:00").getTime();
+
+const countdown = setInterval(function(){
+const now = new Date().getTime();
+const distance = eventDate - now;
+
+if(distance < 0){
+clearInterval(countdown);
+document.getElementById("timer").innerHTML="🎉 Event Started!";
+return;
+}
+
+const days = Math.floor(distance/(1000*60*60*24));
+const hours = Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+const minutes = Math.floor((distance%(1000*60*60))/(1000*60));
+const seconds = Math.floor((distance%(1000*60))/1000);
+
+document.getElementById("timer").innerHTML =
+days+"d "+hours+"h "+minutes+"m "+seconds+"s";
+
+},1000);
+
+/* CHAT SYSTEM */
+function toggleChat(){
+let chat=document.getElementById("chat-body");
+chat.style.display = chat.style.display==="flex" ? "none" : "flex";
+}
+
+function sendMessage(){
+let input=document.getElementById("chat-input");
+let msg=input.value.trim();
+
+if(msg==="") return;
+
+let box=document.getElementById("chat-messages");
+
+box.innerHTML += "<div><b>You:</b> " + msg + "</div>";
+box.innerHTML += "<div id='typing' style='color:gray;font-size:12px;'>Bot is typing...</div>";
+
+fetch("/chat", {
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({message:msg})
+})
+.then(res=>res.json())
+.then(data=>{
+
+document.getElementById("typing").remove();
+
+box.innerHTML += "<div><b>Bot:</b> " + data.reply + "</div>";
+box.scrollTop = box.scrollHeight;
+
+});
+
+input.value="";
+}
+
+</script>
+
+</body>
+</html>

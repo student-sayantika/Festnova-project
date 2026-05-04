@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Coding Competition</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+<style>
+body{
+margin:0;
+font-family:Poppins;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+text-align:center;
+}
+
+h1{
+margin-top:30px;
+}
+
+/* LEVEL CARDS */
+.container{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:20px;
+padding:40px;
+}
+
+.card{
+background:rgba(0,0,0,0.6);
+padding:20px;
+border-radius:15px;
+width:220px;
+transition:0.3s;
+cursor:pointer;
+}
+
+.card:hover{
+transform:scale(1.05);
+background:rgba(0,0,0,0.8);
+}
+
+/* DETAILS */
+.details{
+display:none;
+background:rgba(0,0,0,0.7);
+margin:20px auto;
+padding:25px;
+width:80%;
+max-width:600px;
+border-radius:15px;
+text-align:left;
+}
+
+.details h2{
+color:#ffd369;
+}
+
+button{
+margin-top:15px;
+padding:10px 20px;
+border:none;
+background:#ffd369;
+color:black;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+}
+
+button:hover{
+background:white;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>💻 Coding Competition</h1>
+<p>Select Difficulty Level (Only One Allowed)</p>
+
+<div class="container">
+
+<div class="card" onclick="showDetails('easy')">🟢 Easy Level</div>
+<div class="card" onclick="showDetails('medium')">🟡 Medium Level</div>
+<div class="card" onclick="showDetails('hard')">🔴 Hard Level</div>
+
+</div>
+
+<div id="details" class="details"></div>
+
+<script>
+
+let selectedLevel = null; // 🔥 Track selection
+
+function showDetails(type){
+
+if(selectedLevel && selectedLevel !== type){
+alert("⚠️ You can select only ONE level!");
+return;
+}
+
+selectedLevel = type;
+
+let box = document.getElementById("details");
+
+let data = {
+
+easy: {
+title:"🟢 Easy Level",
+time:"May 17 | 10:00 AM - 12:00 PM",
+rules:"• Basic programming\n• 5 questions\n• Time: 2 hours",
+patterns:"• Pattern printing\n• Basic loops\n• If-else logic\n• Simple arrays",
+desc:"For beginners to test basic logic and coding skills."
+},
+
+medium: {
+title:"🟡 Medium Level",
+time:"May 17 | 10:00 AM - 12:00 PM",
+rules:"• Data Structures\n• 4 questions\n• Time: 2 hours",
+patterns:"• Arrays & Strings\n• Sorting\n• Recursion\n• Stack & Queue",
+desc:"Intermediate level with logic + data structures problems."
+},
+
+hard: {
+title:"🔴 Hard Level",
+time:"May 17 | 10:00 AM - 12:00 PM",
+rules:"• Advanced algorithms\n• 3 questions\n• Time: 2 hours",
+patterns:"• Dynamic Programming\n• Graphs\n• Trees\n• Optimization problems",
+desc:"Challenging problems for experienced coders."
+}
+
+};
+
+let d = data[type];
+
+box.innerHTML = `
+<h2>${d.title}</h2>
+<p><b>🕒 Time:</b> ${d.time}</p>
+
+<p><b>📜 Rules:</b><br>${d.rules.replace(/\n/g,"<br>")}</p>
+
+<p><b>📚 Patterns Covered:</b><br>${d.patterns.replace(/\n/g,"<br>")}</p>
+
+<p><b>ℹ️ Description:</b> ${d.desc}</p>
+
+<button onclick="register('${type}')">Register</button>
+`;
+
+box.style.display = "block";
+}
+
+function register(type){
+
+if(!selectedLevel){
+alert("Please select a level first!");
+return;
+}
+
+window.location.href="/register?event=coding&level=" + type;
+}
+
+</script>
+
+</body>
+</html>

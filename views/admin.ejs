@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+font-family:'Poppins', sans-serif;
+background:linear-gradient(135deg,#1a2a6c,#b21f1f,#fdbb2d);
+color:white;
+padding:20px;
+}
+
+/* HEADER */
+h1{
+text-align:center;
+color:#FFFDD0;
+font-family:'Orbitron', sans-serif;
+margin-bottom:20px;
+}
+
+/* DASHBOARD CONTAINER */
+.container{
+background:rgba(0,0,0,0.6);
+padding:20px;
+border-radius:15px;
+box-shadow:0 8px 20px rgba(0,0,0,0.4);
+}
+
+/* TABLE */
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+overflow:hidden;
+border-radius:10px;
+}
+
+/* HEADER */
+th{
+background:#111;
+color:#ffd369;
+padding:12px;
+font-size:16px;
+}
+
+/* DATA */
+td{
+padding:12px;
+background:rgba(255,255,255,0.05);
+border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+/* HOVER */
+tr:hover td{
+background:rgba(255,255,255,0.1);
+}
+
+/* BUTTON */
+button{
+background:#ff4d4d;
+color:white;
+border:none;
+padding:6px 12px;
+cursor:pointer;
+border-radius:6px;
+font-weight:bold;
+transition:0.3s;
+}
+
+button:hover{
+background:#ff0000;
+transform:scale(1.05);
+}
+
+/* BADGE STYLE */
+.badge{
+padding:5px 10px;
+border-radius:20px;
+font-size:12px;
+background:#ffd369;
+color:black;
+font-weight:bold;
+}
+
+/* RESPONSIVE */
+@media (max-width:768px){
+table, thead, tbody, th, td, tr{
+display:block;
+}
+
+th{
+display:none;
+}
+
+td{
+position:relative;
+padding-left:50%;
+text-align:left;
+}
+
+td::before{
+position:absolute;
+left:10px;
+top:12px;
+font-weight:bold;
+color:#ffd369;
+}
+
+/* Labels */
+td:nth-of-type(1)::before{content:"Name";}
+td:nth-of-type(2)::before{content:"Email";}
+td:nth-of-type(3)::before{content:"Phone";}
+td:nth-of-type(4)::before{content:"Event";}
+td:nth-of-type(5)::before{content:"Category";}
+td:nth-of-type(6)::before{content:"Date";}
+td:nth-of-type(7)::before{content:"Action";}
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>🎉 Admin Dashboard</h1>
+
+<div class="container">
+
+<table>
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Phone</th>
+<th>Event</th>
+<th>Category</th> <!-- ✅ NEW COLUMN -->
+<th>Registration Date</th>
+<th>Action</th>
+</tr>
+
+<% users.forEach(user => { %>
+<tr>
+
+<td><%= user.name %></td>
+<td><%= user.email %></td>
+<td><%= user.phone %></td>
+
+<td>
+  <span class="badge"><%= user.event %></span>
+</td>
+
+<!-- ✅ CATEGORY DISPLAY -->
+<td>
+  <span class="badge">
+    <%= user.category ? user.category : "General" %>
+  </span>
+</td>
+
+<!-- DATE -->
+<td>
+  <%= new Date(user.createdAt).toLocaleString() %>
+</td>
+
+<td>
+<form action="/delete/<%= user._id %>" method="POST">
+<button type="submit">Delete</button>
+</form>
+</td>
+
+</tr>
+<% }) %>
+
+</table>
+
+</div>
+
+</body>
+</html>

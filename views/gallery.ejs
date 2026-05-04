@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title><%= title || "Event Gallery - FestNova" %></title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #0f0f0f, #1c1c1c, #2b2b2b); color: white; }
+
+.header { text-align: center; padding: 60px 20px 20px; }
+.header h1 { font-family: 'Orbitron', sans-serif; color: #FFFDD0; font-size: 40px; }
+.header p { color: #ccc; }
+
+.filters { text-align: center; margin: 20px 0 30px; }
+.filters button {
+  margin: 5px; padding: 8px 20px;
+  background: #2a2a2a; color: white;
+  border: 1px solid #ffd369;
+  border-radius: 20px; cursor: pointer;
+}
+.filters button:hover, .active-filter {
+  background: #ffd369; color: black;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  padding: 0 20px 60px;
+}
+
+.gallery img {
+  width: 250px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.gallery img:hover {
+  transform: scale(1.05);
+}
+
+.hidden { display: none; }
+
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  justify-content: center;
+  align-items: center;
+}
+
+.lightbox.open { display: flex; }
+
+.lightbox img {
+  max-width: 80%;
+  max-height: 80%;
+}
+
+.lightbox span {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 40px;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<h1>Event Gallery</h1>
+<p>Explore moments from our college events 📸</p>
+</div>
+
+<div class="filters">
+<button class="active-filter" onclick="filterPhotos('all', this)">All</button>
+<button onclick="filterPhotos('dance', this)">Dance</button>
+<button onclick="filterPhotos('music', this)">Music</button>
+<button onclick="filterPhotos('sports', this)">Sports</button>
+<button onclick="filterPhotos('tech', this)">Tech</button>
+</div>
+
+<div class="gallery">
+
+<!-- ✅ SAFE CHECK -->
+<% if (photos && photos.length > 0) { %>
+
+  <% photos.forEach(photo => { %>
+    <img 
+      src="/<%= photo.src %>" 
+      class="<%= photo.category %>" 
+      alt="<%= photo.category %>" 
+      onclick="openLightbox(this)"
+      onerror="this.src='/images/default.jpg'"
+    >
+  <% }) %>
+
+<% } else { %>
+
+  <p>No images available 😢</p>
+
+<% } %>
+
+</div>
+
+<div class="lightbox" id="lightbox">
+<span onclick="closeLightbox()">×</span>
+<img id="lightbox-img">
+</div>
+
+<script>
+function filterPhotos(category, btn) {
+  document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active-filter'));
+  btn.classList.add('active-filter');
+
+  document.querySelectorAll('.gallery img').forEach(img => {
+    if (category === 'all' || img.classList.contains(category)) {
+      img.classList.remove('hidden');
+    } else {
+      img.classList.add('hidden');
+    }
+  });
+}
+
+function openLightbox(img) {
+  document.getElementById('lightbox-img').src = img.src;
+  document.getElementById('lightbox').classList.add('open');
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+}
+</script>
+
+</body>
+</html>

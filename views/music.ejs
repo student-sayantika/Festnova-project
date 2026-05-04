@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Music Competition</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+<style>
+body{
+margin:0;
+font-family:Poppins;
+background:linear-gradient(135deg,#1d2671,#c33764);
+color:white;
+text-align:center;
+}
+
+h1{
+margin-top:30px;
+}
+
+/* INSTRUMENT CARDS */
+.container{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:20px;
+padding:40px;
+}
+
+.card{
+background:rgba(0,0,0,0.6);
+padding:20px;
+border-radius:15px;
+width:220px;
+transition:0.3s;
+cursor:pointer;
+}
+
+.card:hover{
+transform:scale(1.05);
+background:rgba(0,0,0,0.8);
+}
+
+/* DETAILS */
+.details{
+display:none;
+background:rgba(0,0,0,0.7);
+margin:20px auto;
+padding:25px;
+width:80%;
+max-width:650px;
+border-radius:15px;
+text-align:left;
+}
+
+.details h2{
+color:#ffd369;
+}
+
+/* CONTACT */
+.contact{
+margin-top:15px;
+padding:10px;
+background:rgba(255,255,255,0.1);
+border-radius:8px;
+}
+
+/* BUTTON */
+button{
+margin-top:15px;
+padding:10px 20px;
+border:none;
+background:#ffd369;
+color:black;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+}
+
+button:hover{
+background:white;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎸 Music Competition</h1>
+<p>Select Your Instrument</p>
+
+<div class="container">
+
+<div class="card" onclick="showDetails('guitar')">🎸 Guitar</div>
+<div class="card" onclick="showDetails('piano')">🎹 Piano</div>
+<div class="card" onclick="showDetails('drum')">🥁 Drums</div>
+<div class="card" onclick="showDetails('violin')">🎻 Violin</div>
+<div class="card" onclick="showDetails('flute')">🎶 Flute</div>
+
+</div>
+
+<div id="details" class="details"></div>
+
+<script>
+
+function showDetails(type){
+
+let box = document.getElementById("details");
+
+let data = {
+
+guitar: {
+title:"🎸 Guitar Performance",
+time:"May 18 | 1:00 PM - 2:00 PM",
+rules:"• Solo performance\n• Max 5 minutes\n• Any genre allowed",
+desc:"Show your guitar skills with melody and rhythm.",
+contact:"Rahul (Senior) - 9876543210"
+},
+
+piano: {
+title:"🎹 Piano Performance",
+time:"May 18 | 2:00 PM - 3:00 PM",
+rules:"• Solo performance\n• Max 5 minutes",
+desc:"Perform classical or modern piano pieces.",
+contact:"Ananya (Senior) - 9123456780"
+},
+
+drum: {
+title:"🥁 Drum Performance",
+time:"May 18 | 3:00 PM - 4:00 PM",
+rules:"• Solo or rhythm set\n• Max 5 minutes",
+desc:"Show your beats and rhythm skills.",
+contact:"Arjun (Senior) - 9988776655"
+},
+
+violin: {
+title:"🎻 Violin Performance",
+time:"May 18 | 4:00 PM - 5:00 PM",
+rules:"• Classical preferred\n• Max 5 minutes",
+desc:"Perform soulful violin music.",
+contact:"Sneha (Senior) - 9876501234"
+},
+
+flute: {
+title:"🎶 Flute Performance",
+time:"May 18 | 5:00 PM - 6:00 PM",
+rules:"• Any style allowed\n• Max 5 minutes",
+desc:"Show your flute playing skills.",
+contact:"Rohit (Senior) - 9012345678"
+}
+
+};
+
+let d = data[type];
+
+box.innerHTML = `
+<h2>${d.title}</h2>
+
+<p><b>🕒 Time:</b> ${d.time}</p>
+
+<p><b>📜 Rules:</b><br>${d.rules.replace(/\n/g,"<br>")}</p>
+
+<p><b>ℹ️ Description:</b> ${d.desc}</p>
+
+<div class="contact">
+<b>📞 Contact for Details:</b><br>
+${d.contact}
+</div>
+
+<button onclick="register('${type}')">Register</button>
+`;
+
+box.style.display = "block";
+}
+
+/* REGISTER */
+function register(type){
+window.location.href="/register?event=music&instrument=" + type;
+}
+
+</script>
+
+</body>
+</html>

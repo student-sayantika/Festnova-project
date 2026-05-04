@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title><%= title %></title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@300;400;600&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+
+<style>
+body{
+margin:0;
+font-family:'Poppins', sans-serif;
+background:linear-gradient(135deg,#000000,#1a1a1a,#2b2b2b);
+color:#f5f5f5;
+}
+
+nav{
+background:rgba(0,0,0,0.9);
+padding:10px 20px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+position:sticky;
+top:0;
+}
+
+.logo{
+display:flex;
+align-items:center;
+}
+
+.logo img{
+height:40px;
+margin-right:10px;
+border-radius:5px;
+}
+
+.logo h2{
+margin:0;
+font-family:'Orbitron', sans-serif;
+color:#FFFDD0;
+}
+
+.nav-links{
+display:flex;
+align-items:center;
+}
+
+.nav-links a{
+color:white;
+text-decoration:none;
+margin:10px;
+font-size:18px;
+font-weight:500;
+transition:0.3s;
+}
+
+.nav-links a:hover{
+color:#ffd369;
+}
+
+/* Logout Button Style */
+.logout-btn{
+background:#ff4d4d;
+color:white;
+border:none;
+padding:8px 12px;
+border-radius:6px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.logout-btn:hover{
+background:#ff0000;
+}
+
+.about{
+max-width:900px;
+margin:auto;
+padding:80px 30px;
+text-align:center;
+opacity:0;
+transform:translateY(50px);
+}
+
+.about h1{
+font-size:44px;
+font-family:'Playfair Display', serif;
+margin-bottom:25px;
+color:#FFFDD0;
+letter-spacing:2px;
+}
+
+.about p{
+font-size:18px;
+line-height:1.8;
+margin-bottom:20px;
+color:#e0e0e0;
+}
+
+footer{
+background:rgba(0,0,0,0.9);
+color:white;
+text-align:center;
+padding:20px;
+margin-top:40px;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+<div class="logo">
+<img src="/images/logo1.png">
+<h2>FestNova</h2>
+</div>
+
+<div class="nav-links">
+<a href="/">Home</a>
+<a href="/about">About</a>
+<a href="/events">Events</a>
+<a href="/gallery">Gallery</a>
+<a href="/contact">Contact</a>
+<a href="/register">Register</a>
+
+<!-- ✅ Logout Button -->
+<a href="/logout">
+<button class="logout-btn">Logout</button>
+</a>
+
+</div>
+</nav>
+
+<div class="about">
+<h1>About FestNova</h1>
+
+<p><%= description1 %></p>
+<p><%= description2 %></p>
+<p><%= description3 %></p>
+<p><%= description4 %></p>
+<p><%= description5 %></p>
+
+</div>
+
+<footer>
+<p>© <%= year %> FestNova | NovaFest</p>
+</footer>
+
+<script>
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', function(e) {
+    if(this.getAttribute("href") === "#"){
+      e.preventDefault();
+      alert(this.textContent + " page coming soon!");
+    }
+  });
+});
+
+const links = document.querySelectorAll('.nav-links a');
+
+links.forEach(link => {
+  link.addEventListener('click', function() {
+    links.forEach(l => l.style.color = "white");
+    this.style.color = "#ffd369";
+  });
+});
+
+window.addEventListener("load", () => {
+  let about = document.querySelector(".about");
+
+  setTimeout(() => {
+    about.style.transition = "1s";
+    about.style.opacity = "1";
+    about.style.transform = "translateY(0)";
+  }, 200);
+});
+
+window.addEventListener("scroll", () => {
+  let about = document.querySelector(".about");
+  let position = about.getBoundingClientRect().top;
+  let screenHeight = window.innerHeight;
+
+  if(position < screenHeight - 100){
+    about.style.opacity = "1";
+    about.style.transform = "translateY(0)";
+    about.style.transition = "1s";
+  }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Mystic Map - Treasure Hunt</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+<style>
+body{
+margin:0;
+font-family:Poppins;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+text-align:center;
+}
+
+h1{
+margin-top:30px;
+}
+
+/* CARDS */
+.container{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:20px;
+padding:40px;
+}
+
+.card{
+background:rgba(0,0,0,0.6);
+padding:20px;
+border-radius:15px;
+width:250px;
+transition:0.3s;
+cursor:pointer;
+}
+
+.card:hover{
+transform:scale(1.05);
+background:rgba(0,0,0,0.85);
+}
+
+/* DETAILS */
+.details{
+display:none;
+background:rgba(0,0,0,0.75);
+margin:20px auto;
+padding:25px;
+width:80%;
+max-width:700px;
+border-radius:15px;
+text-align:left;
+}
+
+.details h2{
+color:#ffd369;
+}
+
+.section{
+margin-top:15px;
+background:rgba(255,255,255,0.08);
+padding:10px;
+border-radius:8px;
+}
+
+.prize{
+margin-top:15px;
+background:rgba(255,215,0,0.2);
+padding:10px;
+border-radius:8px;
+}
+
+.contact{
+margin-top:15px;
+background:rgba(255,255,255,0.1);
+padding:10px;
+border-radius:8px;
+}
+
+/* BUTTON */
+button{
+margin-top:15px;
+padding:10px 20px;
+border:none;
+background:#ffd369;
+color:black;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+}
+
+button:hover{
+background:white;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🗺️ Mystic Map (Treasure Hunt)</h1>
+<p>Group Event - Select Round Details</p>
+
+<div class="container">
+
+<div class="card" onclick="showDetails('round1')">🔍 Round 1 - Puzzle Clues</div>
+<div class="card" onclick="showDetails('round2')">📍 Round 2 - Location Hunt</div>
+<div class="card" onclick="showDetails('round3')">🏁 Round 3 - Final Treasure</div>
+
+</div>
+
+<div id="details" class="details"></div>
+
+<script>
+
+function showDetails(type){
+
+let box = document.getElementById("details");
+
+let data = {
+
+round1: {
+title:"🔍 Round 1 - Puzzle Clues",
+desc:"Teams solve riddles and puzzles to qualify for next round.",
+rules:"• Solve logical puzzles\n• Time-based elimination\n• Top teams qualify",
+time:"May 19 | 6:00 PM - 6:30 PM"
+},
+
+round2: {
+title:"📍 Round 2 - Location Hunt",
+desc:"Teams search different campus locations using clues.",
+rules:"• Follow clue trail\n• No cheating\n• Fastest teams qualify",
+time:"May 19 | 6:30 PM - 7:15 PM"
+},
+
+round3: {
+title:"🏁 Round 3 - Final Treasure",
+desc:"Final challenge to find the hidden treasure.",
+rules:"• Final clue solving\n• Speed + accuracy matters\n• Winner takes prize",
+time:"May 19 | 7:15 PM - 8:00 PM"
+}
+
+};
+
+let d = data[type];
+
+box.innerHTML = `
+<h2>${d.title}</h2>
+
+<p><b>🕒 Time:</b> ${d.time}</p>
+
+<div class="section">
+<b>📜 Rules:</b><br>
+${d.rules.replace(/\n/g,"<br>")}
+</div>
+
+<p><b>ℹ️ Description:</b> ${d.desc}</p>
+
+<div class="section">
+<b>👥 Team Rules:</b><br>
+• Each team must have 4 members<br>
+• Only registered teams allowed<br>
+• Team name mandatory
+</div>
+
+<div class="prize">
+<b>🏆 Winner Prize:</b><br>
+🥇 ₹4000 + Certificate<br>
+🥈 ₹2000 + Certificate
+</div>
+
+<div class="contact">
+<b>📞 Contact for Help:</b><br>
+Sneha (Senior) - 9876509999
+</div>
+
+<button onclick="register()">Register Team</button>
+`;
+
+box.style.display = "block";
+}
+
+/* REGISTER */
+function register(){
+window.location.href="/register?event=mystic-map";
+}
+
+</script>
+
+</body>
+</html>

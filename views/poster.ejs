@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Poster Making Competition</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+<style>
+body{
+margin:0;
+font-family:Poppins;
+background:linear-gradient(135deg,#232526,#414345);
+color:white;
+text-align:center;
+}
+
+h1{
+margin-top:30px;
+}
+
+/* CARDS */
+.container{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:20px;
+padding:40px;
+}
+
+.card{
+background:rgba(0,0,0,0.6);
+padding:20px;
+border-radius:15px;
+width:230px;
+transition:0.3s;
+cursor:pointer;
+}
+
+.card:hover{
+transform:scale(1.05);
+background:rgba(0,0,0,0.85);
+}
+
+/* DETAILS */
+.details{
+display:none;
+background:rgba(0,0,0,0.75);
+margin:20px auto;
+padding:25px;
+width:80%;
+max-width:700px;
+border-radius:15px;
+text-align:left;
+}
+
+.details h2{
+color:#ffd369;
+}
+
+.section{
+margin-top:15px;
+background:rgba(255,255,255,0.08);
+padding:10px;
+border-radius:8px;
+}
+
+.prize{
+margin-top:15px;
+background:rgba(255,215,0,0.2);
+padding:10px;
+border-radius:8px;
+}
+
+.contact{
+margin-top:15px;
+background:rgba(255,255,255,0.1);
+padding:10px;
+border-radius:8px;
+}
+
+/* BUTTON */
+button{
+margin-top:15px;
+padding:10px 20px;
+border:none;
+background:#ffd369;
+color:black;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+}
+
+button:hover{
+background:white;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎨 Poster Making Competition</h1>
+<p>Select Theme</p>
+
+<div class="container">
+
+<div class="card" onclick="showDetails('environment')">🌍 Save Environment</div>
+<div class="card" onclick="showDetails('technology')">🤖 Future Technology</div>
+<div class="card" onclick="showDetails('social')">🧑‍🤝‍🧑 Social Awareness</div>
+<div class="card" onclick="showDetails('open')">🎯 Open Theme</div>
+
+</div>
+
+<div id="details" class="details"></div>
+
+<script>
+
+function showDetails(type){
+
+let box = document.getElementById("details");
+
+let data = {
+
+environment: {
+title:"🌍 Save Environment",
+time:"May 19 | 2:00 PM - 4:00 PM",
+rules:"• Individual participation\n• Use A3/A2 paper\n• No digital tools\n• Bring your own materials",
+materials:"Colors, brushes, sketch pens allowed",
+judging:"Creativity, Message clarity, Presentation",
+desc:"Create posters spreading awareness about environment protection.",
+contact:"Neha (Senior) - 9876511111"
+},
+
+technology: {
+title:"🤖 Future Technology",
+time:"May 19 | 2:00 PM - 4:00 PM",
+rules:"• Individual participation\n• Hand-drawn only\n• Original work required",
+materials:"Pencil, colors, markers",
+judging:"Innovation, Idea uniqueness, Design",
+desc:"Show your imagination of future tech world.",
+contact:"Aman (Senior) - 9876522222"
+},
+
+social: {
+title:"🧑‍🤝‍🧑 Social Awareness",
+time:"May 19 | 2:00 PM - 4:00 PM",
+rules:"• Individual participation\n• Clear message required\n• No copied content",
+materials:"Any art supplies allowed",
+judging:"Impact, Message strength, Creativity",
+desc:"Highlight important social issues through art.",
+contact:"Riya (Senior) - 9876533333"
+},
+
+open: {
+title:"🎯 Open Theme",
+time:"May 19 | 2:00 PM - 4:00 PM",
+rules:"• Free theme\n• Unique idea preferred\n• Hand-drawn",
+materials:"All materials allowed",
+judging:"Creativity, Innovation, Overall design",
+desc:"Express your creativity freely.",
+contact:"Kunal (Senior) - 9876544444"
+}
+
+};
+
+let d = data[type];
+
+box.innerHTML = `
+<h2>${d.title}</h2>
+
+<p><b>🕒 Time:</b> ${d.time}</p>
+
+<div class="section">
+<b>📜 Rules:</b><br>
+${d.rules.replace(/\n/g,"<br>")}
+</div>
+
+<div class="section">
+<b>🎨 Materials Allowed:</b><br>
+${d.materials}
+</div>
+
+<div class="section">
+<b>🏆 Judging Criteria:</b><br>
+${d.judging}
+</div>
+
+<p><b>ℹ️ Description:</b> ${d.desc}</p>
+
+<div class="prize">
+<b>🏆 Winner Prize:</b><br>
+🥇 1st Prize: ₹2000 + Certificate<br>
+🥈 2nd Prize: ₹1000 + Certificate<br>
+🥉 3rd Prize: Certificate
+</div>
+
+<div class="contact">
+<b>📞 Contact for Help:</b><br>
+${d.contact}
+</div>
+
+<button onclick="register('${type}')">Register</button>
+`;
+
+box.style.display = "block";
+}
+
+/* REGISTER */
+function register(type){
+window.location.href="/register?event=poster&theme=" + type;
+}
+
+</script>
+
+</body>
+</html>

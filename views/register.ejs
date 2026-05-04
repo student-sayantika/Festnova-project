@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title><%= title %></title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+margin:0;
+font-family:'Poppins', sans-serif;
+background:linear-gradient(135deg,#0f0f0f,#1c1c1c,#2b2b2b);
+color:white;
+}
+h2{
+font-family:'Orbitron', sans-serif;
+}
+form input, form select{
+width:100%;
+padding:12px;
+margin:8px 0 20px;
+border:none;
+border-radius:6px;
+background:#2a2a2a;
+color:#fff;
+}
+form label{
+font-weight:500;
+}
+button{
+width:100%;
+background:#ffd369;
+color:#000;
+font-weight:bold;
+padding:14px;
+border:none;
+border-radius:8px;
+font-size:16px;
+cursor:pointer;
+transition:0.3s;
+}
+button:hover{
+background:white;
+}
+.counter{
+font-size:12px;
+color:#aaa;
+text-align:right;
+margin-top:-15px;
+margin-bottom:10px;
+}
+#topBtn{
+position:fixed;
+bottom:20px;
+right:20px;
+padding:10px 15px;
+background:#ffd369;
+border:none;
+border-radius:50%;
+cursor:pointer;
+display:none;
+}
+</style>
+</head>
+
+<body>
+
+<section style="padding:80px 20px; text-align:center;">
+
+<h2 style="color:#FFFDD0; font-size:38px;">Event Registration</h2>
+
+<p style="color:#cccccc;">
+Join FestNova events and showcase your talent 🚀
+</p>
+
+<form id="regForm" style="max-width:650px; margin:auto; text-align:left; background:#1a1a1a; padding:30px; border-radius:12px;">
+
+<label>Full Name:</label>
+<input type="text" id="name" required>
+
+<label>Email:</label>
+<input type="email" id="email" required>
+
+<label>Phone:</label>
+<input type="text" id="phone">
+
+<label>Select Role:</label>
+<select id="role">
+<option value="">Choose Role</option>
+<option>Student</option>
+<option>Professor</option>
+<option>Non-Teaching Staff</option>
+</select>
+
+<label>Department:</label>
+<select id="department">
+<option value="">Select Department</option>
+<option>CSE</option>
+<option>AIML</option>
+<option>IT</option>
+<option>ECE</option>
+<option>EE</option>
+<option>Civil</option>
+<option>Mechanical</option>
+</select>
+
+<label>Year:</label>
+<select id="year">
+<option value="">Select Year</option>
+<option>1st Year</option>
+<option>2nd Year</option>
+<option>3rd Year</option>
+<option>4th Year</option>
+</select>
+
+<!-- EVENT -->
+<label>Select Event:</label>
+<select id="event" onchange="updateCategory()" required>
+<option value="">Choose Event</option>
+<option>Coding Competition</option>
+<option>Dance Competition</option>
+<option>Singing Competition</option>
+<option>Music Competition</option>
+<option>Gaming Arena</option>
+<option>Robotics Competition</option>
+<option>Poster Making</option>
+</select>
+
+<!-- CATEGORY -->
+<label>Select Category / Type:</label>
+<select id="category" disabled required>
+<option value="">Select Event First</option>
+</select>
+
+<!-- TEAM -->
+<label>Team Name:</label>
+<input type="text" id="teamName" placeholder="Enter team name (if any)">
+
+<label>Team Members:</label>
+<input type="text" id="team" maxlength="100">
+<div class="counter" id="teamCounter">0/100</div>
+
+<button type="submit" id="submitBtn">Register Now</button>
+
+</form>
+</section>
+
+<button id="topBtn">↑</button>
+
+<script>
+
+// ✅ CATEGORY DATA
+const categories = {
+"Coding Competition": ["Easy", "Medium", "Hard"],
+"Dance Competition": ["Hip-Hop", "Classical", "Contemporary"],
+"Singing Competition": ["Bollywood", "Classical", "Rap"],
+"Music Competition": ["Guitar", "Piano", "Drums"],
+"Gaming Arena": ["Indoor", "Outdoor", "E-Sports"],
+"Robotics Competition": ["Line Follower", "Obstacle Avoidance", "Manual Robot"],
+"Poster Making": ["Digital Art", "Hand Drawing"]
+};
+
+// ✅ UPDATE CATEGORY
+function updateCategory(){
+let event = document.getElementById("event").value;
+let cat = document.getElementById("category");
+
+cat.innerHTML = '';
+cat.disabled = false;
+
+if(!event){
+cat.innerHTML = '<option>Select Event First</option>';
+cat.disabled = true;
+return;
+}
+
+let labelText = "Select Type";
+
+if(event === "Singing Competition") labelText = "Select Singing Type";
+if(event === "Dance Competition") labelText = "Select Dance Type";
+if(event === "Coding Competition") labelText = "Select Level";
+if(event === "Gaming Arena") labelText = "Select Game Type";
+
+let firstOption = document.createElement("option");
+firstOption.value = "";
+firstOption.innerText = labelText;
+cat.appendChild(firstOption);
+
+categories[event].forEach(c => {
+let opt = document.createElement("option");
+opt.value = c;
+opt.innerText = c;
+cat.appendChild(opt);
+});
+}
+
+// ✅ TEAM COUNTER
+document.getElementById("team").addEventListener("input", function(){
+document.getElementById("teamCounter").innerText = this.value.length + "/100";
+});
+
+// ✅ SUBMIT (🔥 FIXED)
+document.getElementById('regForm').addEventListener('submit', async function(e){
+e.preventDefault();
+
+const data = {
+name: document.getElementById("name").value.trim(),
+email: document.getElementById("email").value.trim(),
+phone: document.getElementById("phone").value.trim(),
+role: document.getElementById("role").value,
+department: document.getElementById("department").value,
+year: document.getElementById("year").value,
+event: document.getElementById("event").value,
+category: document.getElementById("category").value,
+teamName: document.getElementById("teamName").value,
+team: document.getElementById("team").value
+};
+
+// ✅ FRONTEND VALIDATION
+if(!data.name || !data.email || !data.event){
+alert("❌ Please fill Name, Email, and Event");
+return;
+}
+
+const btn = document.getElementById('submitBtn');
+btn.innerText = 'Submitting...';
+btn.disabled = true;
+
+try {
+const res = await fetch('/register', {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify(data)
+});
+
+const result = await res.json();
+alert(result.message);
+
+this.reset();
+document.getElementById("category").disabled = true;
+document.getElementById("category").innerHTML = '<option>Select Event First</option>';
+
+} catch (err) {
+alert("❌ Something went wrong");
+}
+
+btn.innerText = 'Register Now';
+btn.disabled = false;
+});
+
+// ✅ SCROLL BUTTON
+let topBtn = document.getElementById("topBtn");
+window.onscroll = function(){
+topBtn.style.display = window.scrollY > 200 ? "block" : "none";
+};
+topBtn.onclick = function(){
+window.scrollTo({top:0, behavior:'smooth'});
+};
+
+</script>
+
+</body>
+</html>

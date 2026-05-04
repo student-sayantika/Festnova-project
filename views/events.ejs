@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title><%= title %></title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body{
+margin:0;
+font-family:'Poppins', sans-serif;
+background:linear-gradient(135deg,#0f0f0f,#1c1c1c,#2b2b2b);
+color:white;
+}
+
+.events{
+padding:80px 20px;
+text-align:center;
+}
+
+.events h1{
+font-family:'Orbitron', sans-serif;
+color:#FFFDD0;
+font-size:40px;
+margin-bottom:10px;
+}
+
+.events p{
+color:#ccc;
+margin-bottom:50px;
+}
+
+.event-container{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:30px;
+}
+
+.event-card{
+background:#1a1a1a;
+width:280px;
+border-radius:12px;
+padding:20px;
+box-shadow:0 8px 30px rgba(0,0,0,0.6);
+transition:0.3s;
+
+opacity:0;
+transform:translateY(30px);
+animation:fadeUp 0.8s ease forwards;
+}
+
+@keyframes fadeUp{
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+.event-card:hover{
+transform:translateY(-8px) scale(1.03);
+box-shadow:0 0 20px #ffd369, 0 0 40px rgba(255,211,105,0.4);
+}
+
+.event-card i{
+font-size:30px;
+margin-bottom:10px;
+color:#ffd369;
+}
+
+.event-card h3{
+color:#ffd369;
+margin-bottom:10px;
+}
+
+.event-card p{
+color:#ccc;
+font-size:14px;
+}
+
+.event-info{
+margin-top:10px;
+font-size:13px;
+color:#aaa;
+}
+
+.event-info i{
+margin-right:5px;
+color:#ffd369;
+}
+
+/* Make whole card clickable */
+.event-card a{
+text-decoration:none;
+color:inherit;
+display:block;
+}
+</style>
+</head>
+
+<body>
+
+<section class="events">
+
+<h1>Our Events</h1>
+<p><%= subtitle %></p>
+
+<div class="event-container">
+
+<!-- 17 MAY -->
+
+<!-- ✅ CODING (FIXED + CLICKABLE) -->
+<div class="event-card">
+<a href="/event/coding">
+
+<i class="fas fa-code"></i>
+<h3>Coding Competition</h3>
+<p>Test your programming skills and compete with the best coders.</p>
+
+<div class="event-info">
+<p><i class="fas fa-calendar"></i> May 17</p>
+<p><i class="fas fa-clock"></i> 10:00 AM - 12:00 PM</p>
+</div>
+
+</a>
+</div>
+
+<div class="event-card">
+<a href="/event/dance">
+
+<i class="fas fa-music"></i>
+<h3>Dance Competition</h3>
+<p>Show your dance talent and win exciting prizes.</p>
+
+<div class="event-info">
+<p><i class="fas fa-calendar"></i> May 17</p>
+<p><i class="fas fa-clock"></i> 2:00 PM - 5:00 PM</p>
+</div>
+
+</a>
+</div>
+
+<div class="event-card">
+<a href="/event/hackathon">
+
+<i class="fas fa-laptop-code"></i>
+<h3>Hackathon</h3>
+<p>Build innovative projects and solve real-world problems.</p>
+
+<div class="event-info">
+<p><i class="fas fa-calendar"></i> May 17</p>
+<p><i class="fas fa-clock"></i> 6:00 PM - 10:00 PM</p>
+</div>
+
+</a>
+</div>
+
+<!-- 18 MAY -->
+
+<!-- ✅ SINGING -->
+<div class="event-card">
+<a href="/event/singing">
+
+<i class="fas fa-microphone-alt"></i>
+<h3>Singing Competition</h3>
+<p>Let your voice shine on the stage.</p>
+
+<div class="event-info">
+<p><i class="fas fa-calendar"></i> May 18</p>
+<p><i class="fas fa-clock"></i> 10:00 AM - 12:00 PM</p>
+</div>
+
+</a>
+</div>
+
+<div class="event-card">
+<a href="/event/music">
+
+<i class="fas fa-guitar"></i>
+<h3>Music Competition</h3>
+<p>Play instruments and show your musical talent.</p>
+
+<div class="event-info">
+<p><i class="fas fa-calendar"></i> May 18</p>
+<p><i class="fas fa-clock"></i> 1:00 PM - 4:00 PM</p>
+</div>
+
+</a>
+</div>
+
+<div class="event-card">
+<a href="/event/gaming">
+
+<i class="fas fa-gamepad"></i>
+<h3>Gaming Arena</h3>
+<p>Carrom, TT, Badminton, Football & E-sports competitions.</p>
+
+<div class="event-info">
+<p><i class="fas fa-calendar"></i> May 18</p>
+<p><i class="fas fa-clock"></i> 4:00 PM - 7:00 PM</p>
+</div>
+
+</a>
+</div>
+
+<!-- 19 MAY -->
+
+<div class="event-card">
+<a href="/event/robotics">
+
+<i class="fas fa-robot"></i>
+<h3>Robotics Competition</h3>
+<p>Build smart robots and showcase innovation.</p>
+
+<div class="event-info">
+<p><i class="fas fa-calendar"></i> May 19</p>
+<p><i class="fas fa-clock"></i> 10:00 AM - 2:00 PM</p>
+</div>
+
+</a>
+</div>
+
+<div class="event-card">
+<a href="/event/poster">
+
+<i class="fas fa-palette"></i>
+<h3>Poster Making</h3>
+<p>Show your creativity with impactful designs.</p>
+
+<div class="event-info">
+<p><i class="fas fa-calendar"></i> May 19</p>
+<p><i class="fas fa-clock"></i> 2:00 PM - 4:00 PM</p>
+</div>
+
+</a>
+</div>
+
+<div class="event-card">
+<a href="/event/debate">
+
+<i class="fas fa-comments"></i>
+<h3>Debate Competition</h3>
+<p>Express your ideas and challenge opinions.</p>
+
+<div class="event-info">
+<p><i class="fas fa-calendar"></i> May 19</p>
+<p><i class="fas fa-clock"></i> 4:00 PM - 6:00 PM</p>
+</div>
+
+</a>
+</div>
+
+<div class="event-card">
+<a href="/event/mystic">
+
+<i class="fas fa-map-marked-alt"></i>
+<h3>Mystic Map</h3>
+<p>Treasure hunt filled with clues and adventure.</p>
+
+<div class="event-info">
+<p><i class="fas fa-calendar"></i> May 19</p>
+<p><i class="fas fa-clock"></i> 6:00 PM - 8:00 PM</p>
+</div>
+
+</a>
+</div>
+
+</div>
+</section>
+
+</body>
+</html>

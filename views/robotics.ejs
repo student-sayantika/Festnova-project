@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Robotics Competition</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+<style>
+body{
+margin:0;
+font-family:Poppins;
+background:linear-gradient(135deg,#000428,#004e92);
+color:white;
+text-align:center;
+}
+
+h1{
+margin-top:30px;
+}
+
+/* CARDS */
+.container{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:20px;
+padding:40px;
+}
+
+.card{
+background:rgba(0,0,0,0.6);
+padding:20px;
+border-radius:15px;
+width:230px;
+transition:0.3s;
+cursor:pointer;
+}
+
+.card:hover{
+transform:scale(1.05);
+background:rgba(0,0,0,0.85);
+}
+
+/* DETAILS */
+.details{
+display:none;
+background:rgba(0,0,0,0.75);
+margin:20px auto;
+padding:25px;
+width:80%;
+max-width:700px;
+border-radius:15px;
+text-align:left;
+}
+
+.details h2{
+color:#ffd369;
+}
+
+.contact{
+margin-top:15px;
+background:rgba(255,255,255,0.1);
+padding:10px;
+border-radius:8px;
+}
+
+.prize{
+margin-top:15px;
+background:rgba(255,215,0,0.2);
+padding:10px;
+border-radius:8px;
+}
+
+/* BUTTON */
+button{
+margin-top:15px;
+padding:10px 20px;
+border:none;
+background:#ffd369;
+color:black;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+}
+
+button:hover{
+background:white;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🤖 Robotics Competition</h1>
+<p>Select Your Category</p>
+
+<div class="container">
+
+<div class="card" onclick="showDetails('line')">🚗 Line Follower Robot</div>
+<div class="card" onclick="showDetails('obstacle')">🛑 Obstacle Avoiding Robot</div>
+<div class="card" onclick="showDetails('manual')">🎮 Manual Controlled Robot</div>
+<div class="card" onclick="showDetails('innovation')">💡 Innovative Model</div>
+
+</div>
+
+<div id="details" class="details"></div>
+
+<script>
+
+function showDetails(type){
+
+let box = document.getElementById("details");
+
+let data = {
+
+line: {
+title:"🚗 Line Follower Robot",
+type:"Individual / Group",
+time:"May 19 | 10:00 AM - 12:00 PM",
+rules:"• Robot must follow black line\n• No external control\n• Max size limit applies",
+desc:"Design an autonomous robot that follows a track.",
+contact:"Arjun (Senior) - 9876504444"
+},
+
+obstacle: {
+title:"🛑 Obstacle Avoiding Robot",
+type:"Individual / Group",
+time:"May 19 | 12:30 PM - 2:00 PM",
+rules:"• Must detect & avoid obstacles\n• Sensor-based robot\n• Fully automatic",
+desc:"Robot should navigate without collision.",
+contact:"Rahul (Senior) - 9876505555"
+},
+
+manual: {
+title:"🎮 Manual Controlled Robot",
+type:"Group Only (Max 3)",
+time:"May 19 | 2:30 PM - 4:00 PM",
+rules:"• Controlled via remote\n• Task-based challenge\n• Speed + control matters",
+desc:"Compete in real-time control challenges.",
+contact:"Sayan (Senior) - 9876506666"
+},
+
+innovation: {
+title:"💡 Innovative Model",
+type:"Individual / Group",
+time:"May 19 | 4:30 PM - 6:00 PM",
+rules:"• Unique idea required\n• Presentation mandatory\n• Working model preferred",
+desc:"Showcase your creativity and innovation.",
+contact:"Priya (Senior) - 9876507777"
+}
+
+};
+
+let d = data[type];
+
+box.innerHTML = `
+<h2>${d.title}</h2>
+
+<p><b>👥 Participation:</b> ${d.type}</p>
+
+<p><b>🕒 Time:</b> ${d.time}</p>
+
+<p><b>📜 Rules:</b><br>${d.rules.replace(/\n/g,"<br>")}</p>
+
+<p><b>ℹ️ Description:</b> ${d.desc}</p>
+
+<div class="prize">
+<b>🏆 Winner Prize:</b><br>
+🥇 1st Prize: ₹5000 + Certificate<br>
+🥈 2nd Prize: ₹3000 + Certificate<br>
+🥉 3rd Prize: ₹1000 + Certificate
+</div>
+
+<div class="contact">
+<b>📞 Contact for Help:</b><br>
+${d.contact}
+</div>
+
+<button onclick="register('${type}')">Register</button>
+`;
+
+box.style.display = "block";
+}
+
+/* REGISTER */
+function register(type){
+window.location.href="/register?event=robotics&category=" + type;
+}
+
+</script>
+
+</body>
+</html>
