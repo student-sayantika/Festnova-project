@@ -41,14 +41,13 @@ const transporter = nodemailer.createTransport({
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
-  },
-  connectionTimeout: 10000
+  }
 });
 transporter.verify((error, success) => {
   if (error) {
-    console.log("SMTP Error:", error);
+    console.log("Mail Error:", error);
   } else {
-    console.log("SMTP Connected");
+    console.log("✅ Mail server ready");
   }
 });
 
