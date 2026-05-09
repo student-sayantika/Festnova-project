@@ -7,29 +7,17 @@ const { Resend } = require('resend');
 const cors = require('cors');
 const session = require('express-session');
 const fetch = require("node-fetch");
-const MongoStore = require('connect-mongo');
 
 // Resend setup
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Session
-app.set('trust proxy', 1);
-
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: false,
-
-  store: MongoStore.create({
-    mongoUrl: process.env.MONGO_URI
-  }),
-
-  cookie: {
-    secure: true,
-    httpOnly: true,
-    maxAge: 1000 * 60 * 60
-  }
+  saveUninitialized: true
 }));
+
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
