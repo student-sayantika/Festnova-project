@@ -3,53 +3,38 @@ require("dotenv").config();
 const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 const cors = require('cors');
 const session = require('express-session');
 const fetch = require("node-fetch");
 
-// 🔹 Session
+// Resend setup
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+// Session
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }));
 
-// 🔹 Middleware
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.static('public'));
 
-// 🔹 View Engine
+// View Engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// 🔹 MongoDB
+// MongoDB
 mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log('✅ DB connected'))
 .catch(err => console.log('❌ DB Error:', err));
 
-// 🔹 Model
+// Model
 const User = require('./models/user');
-
-// 🔹 Email
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
-});
-transporter.verify((error, success) => {
-  if (error) {
-    console.log("Mail Error:", error);
-  } else {
-    console.log("✅ Mail server ready");
-  }
-});
 
 // ================= ROUTES =================
 
@@ -75,9 +60,8 @@ app.get('/register', (req, res) => {
   });
 });
 
-// Register POST
-app.post('/register', async (req, res) => {
 
+app.post('/register', async (req, res) => {
   const {
     name, email, phone, role,
     department, year, teamName, team
@@ -87,7 +71,6 @@ app.post('/register', async (req, res) => {
   const category = req.body.category || req.query.category;
 
   try {
-
     if (!name || !email || !event) {
       return res.status(400).json({
         success: false,
@@ -105,23 +88,28 @@ app.post('/register', async (req, res) => {
     }
 
     const user = new User({
-      name, email, phone, role,
-      department, year, event,
-      category, teamName, team
+      name,
+      email,
+      phone,
+      role,
+      department,
+      year,
+      event,
+      category,
+      teamName,
+      team
     });
 
     await user.save();
 
-    // Email
     try {
-     await transporter.sendMail({
-  from: '"FestNova Team 🎉" <sahasayantika51@gmail.com>',
-  to: email,
-  subject: "🎉 Registration Successful!",
-  html: `
-  <div style="font-family:Poppins,sans-serif;padding:20px;">
-    
-    <h2>Hello ${name} 👋</h2>
+      const result = await resend.emails.send({
+        from: "FestNova <onboarding@resend.dev>",
+        to: email,
+        subject: "🎉 Registration Successful!",
+        html: `
+          <div>
+            <h2>Hello ${name} 👋</h2>
 
     <p>You have successfully registered for:</p>
 
@@ -141,12 +129,14 @@ app.post('/register', async (req, res) => {
     <p>📍 Your College Campus</p>
 
     <p>We’re excited to have you! 🚀</p>
+          </div>
+        `
+      });
 
-  </div>
-  `
-});
+      console.log("✅ Email sent:", result);
+
     } catch (err) {
-      console.log("Email error:", err.message);
+      console.log("❌ Email error:", err);
     }
 
     res.json({
@@ -155,15 +145,24 @@ app.post('/register', async (req, res) => {
     });
 
   } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
+    res.status(500).json({
+      success: false,
+      message: err.message
+    });
   }
 });
+
 
 // Admin
 app.get('/admin', async (req, res) => {
   if (!req.session.isAdmin) return res.redirect('/admin-login');
+
   const users = await User.find().sort({ _id: -1 });
-  res.render('admin', { title: "Admin Dashboard", users });
+
+  res.render('admin', {
+    title: "Admin Dashboard",
+    users
+  });
 });
 
 // Delete
@@ -185,9 +184,8 @@ app.get('/about', (req, res) => {
   });
 });
 
-// ✅ Gallery FIXED
+// Gallery
 app.get('/gallery', (req, res) => {
-
   const photos = [
     { src: "images/coding.jpg", category: "tech" },
     { src: "images/music.jpg", category: "music" },
@@ -203,7 +201,6 @@ app.get('/gallery', (req, res) => {
     title: 'Gallery - FestNova',
     photos
   });
-
 });
 
 // Contact
@@ -211,16 +208,13 @@ app.get('/contact', (req, res) => {
   res.render('contact', {
     title: "Contact - FestNova",
     subtitle: "Get in touch with us 💬",
-
     email: "festnova@gmail.com",
     phone: "+91 9876543210",
     whatsapp: "+91 9876543210",
     location: "College Campus",
-
     organizer: "Festnova Team",
     club: "Tech Club",
     organizerPhone: "+91 9999999999",
-
     year: new Date().getFullYear()
   });
 });
@@ -247,7 +241,7 @@ app.get('/logout', (req, res) => {
   res.redirect('/admin-login');
 });
 
-// Events Pages
+// Event Pages
 app.get("/event/singing", (req, res) => res.render("singing"));
 app.get("/event/coding", (req, res) => res.render("coding"));
 app.get("/event/dance", (req, res) => res.render("dance"));
@@ -258,9 +252,7 @@ app.get("/event/robotics", (req, res) => res.render("robotics"));
 app.get("/event/poster", (req, res) => res.render("poster"));
 app.get("/event/debate", (req, res) => res.render("debate"));
 app.get("/event/mystic", (req, res) => res.render("mystic"));
-
-
-  app.post("/chat", async (req, res) => {
+app.post("/chat", async (req, res) => {
   try {
     const userMessage = req.body.message;
 
