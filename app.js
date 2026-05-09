@@ -7,17 +7,29 @@ const { Resend } = require('resend');
 const cors = require('cors');
 const session = require('express-session');
 const fetch = require("node-fetch");
+const MongoStore = require('connect-mongo');
 
 // Resend setup
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Session
+app.set('trust proxy', 1);
+
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: true
-}));
+  saveUninitialized: false,
 
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_URI
+  }),
+
+  cookie: {
+    secure: true,
+    httpOnly: true,
+    maxAge: 1000 * 60 * 60
+  }
+}));
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -227,7 +239,10 @@ app.get('/admin-login', (req, res) => {
 app.post('/admin-login', (req, res) => {
   const { username, password } = req.body;
 
-  if (username === "admin" && password === "1234") {
+if (
+  username === process.env.ADMIN_USERNAME &&
+  password === process.env.ADMIN_PASSWORD
+) {
     req.session.isAdmin = true;
     res.redirect('/admin');
   } else {
